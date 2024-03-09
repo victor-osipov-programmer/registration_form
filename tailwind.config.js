@@ -2,7 +2,7 @@
 export default {
   content: [
     // ... your project files, eg.:
-    // './index.html',
+    './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',
     './vueform.config.js', // or where `vueform.config.js` is located. Change `.js` to `.ts` if required.
     './node_modules/@vueform/vueform/themes/tailwind/**/*.vue',
@@ -13,6 +13,9 @@ export default {
   },
   plugins: [
     require('@vueform/vueform/tailwind'),
-  ]
+  ],
+  vfDarkMode: true,
+  // darkMode: true,
+  darkMode: 'class',
 }
 
