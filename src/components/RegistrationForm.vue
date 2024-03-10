@@ -56,7 +56,6 @@
                 <FormStep
                     name="page3"
                     :elements="[
-                        'target_mentor',
                         'target_user',
                         'mentor',
                         'participant_1',
@@ -153,7 +152,7 @@
                     :conditions="[['country', 'in', ['Беларусь']]]"
                     align="right"
                 />
-                <RadiogroupElement
+                <!-- <RadiogroupElement
                     name="target_mentor"
                     view="tabs"
                     :items="[
@@ -162,7 +161,7 @@
                             label: 'Наставник',
                         }
                     ]"
-                />
+                /> -->
                 <RadiogroupElement
                     name="target_user"
                     view="tabs"
@@ -179,8 +178,13 @@
                             value: 'Участник 3',
                             label: 'Участник 3',
                         },
+                        {
+                            value: 'Наставник',
+                            label: 'Наставник',
+                        },
                     ]"
                     default="Участник 1"
+                    size="sm"
                 />
                 <ObjectElement
                     name="mentor"
@@ -621,3 +625,11 @@
         </template>
     </Vueform>
 </template>
+
+<style>
+@media (width < 370px) {
+    :root, :before, :after, * {
+        --vf-px-group-tabs-sm: 0.1rem;
+    }
+}
+</style>
