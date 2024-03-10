@@ -15,7 +15,6 @@ export default {
     require('@vueform/vueform/tailwind'),
   ],
   vfDarkMode: true,
-  // darkMode: true,
   darkMode: 'class',
 }
 

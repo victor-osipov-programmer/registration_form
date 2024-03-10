@@ -5,9 +5,11 @@
 body {
     padding: 0.5rem;
 }
-.dark * {
-    color: rgb(218, 218, 218);
+
+:root, :before, :after, * {
+    --vf-px-group-tabs-sm: 0.1rem;
 }
-.dark body {
-    background-color: rgb(54, 54, 54);
+.dark, .dark *, .dark :before, .dark :after {
+    --vf-bg-input: var(--vf-dark-600);
 }
+

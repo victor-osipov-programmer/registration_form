@@ -1,3 +1,7 @@
+<script setup>
+
+</script>
+
 <template>
     <Vueform :display-errors="false">
         <template #empty>
@@ -625,11 +629,3 @@
         </template>
     </Vueform>
 </template>
-
-<style>
-@media (width < 370px) {
-    :root, :before, :after, * {
-        --vf-px-group-tabs-sm: 0.1rem;
-    }
-}
-</style>
