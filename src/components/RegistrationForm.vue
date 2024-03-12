@@ -91,6 +91,7 @@
                     content="Приветственный текст"
                 />
                 <RadiogroupElement
+                    ref="country_element"
                     name="country"
                     view="blocks"
                     :items="[
@@ -156,16 +157,6 @@
                     :conditions="[['country', 'in', ['Беларусь']]]"
                     align="right"
                 />
-                <!-- <RadiogroupElement
-                    name="target_mentor"
-                    view="tabs"
-                    :items="[
-                        {
-                            value: 'Наставник',
-                            label: 'Наставник',
-                        }
-                    ]"
-                /> -->
                 <RadiogroupElement
                     name="target_user"
                     view="tabs"
@@ -425,6 +416,7 @@
                     />
                 </ObjectElement>
                 <RadiogroupElement
+                    ref="age_element"
                     name="age"
                     view="blocks"
                     :rules="['required']"
@@ -505,6 +497,7 @@
                     :rules="['required']"
                 />
                 <RadiogroupElement
+                    ref="participation_element"
                     name="participation"
                     view="tabs"
                     :items="[
@@ -521,107 +514,11 @@
                     :rules="['required']"
                 />
                 <CheckboxgroupElement
+                    ref="evens_element"
                     name="events"
                     :rules="['required']"
                     field-name="мероприятия"
-                    :items="[
-                        {
-                            value: 'Творческая категория',
-                            label: 'Творческая категория',
-                        },
-                        {
-                            value: 'Движение по линии',
-                            label: 'Движение по линии',
-                        },
-                        {
-                            value: 'Сумо',
-                            label: 'Сумо',
-                        },
-                        {
-                            value: 'Миссия &#34;Будущий инженер&#34;',
-                            label: 'Миссия &#34;Будущий инженер&#34;',
-                        },
-                        {
-                            value: 'Scratch Junior',
-                            label: 'Scratch Junior',
-                        },
-                        {
-                            value: 'Олимпиада «Старт в робототехнику»',
-                            label: 'Олимпиада «Старт в робототехнику»',
-                        },
-                        {
-                            value: 'Движение по линии DIY',
-                            label: 'Движение по линии DIY',
-                        },
-                        {
-                            value: 'Движение по линии Конструкторы',
-                            label: 'Движение по линии Конструкторы',
-                        },
-                        {
-                            value: 'Механическое сумо',
-                            label: 'Механическое сумо',
-                        },
-                        {
-                            value: 'Интеллектуальное сумо',
-                            label: 'Интеллектуальное сумо',
-                        },
-                        {
-                            value: 'Эстафета',
-                            label: 'Эстафета',
-                        },
-                        {
-                            value: 'Большое путешествие',
-                            label: 'Большое путешествие',
-                        },
-                        {
-                            value: 'Миссия &#34;Вселенная бесконечна&#34;',
-                            label: 'Миссия &#34;Вселенная бесконечна&#34;',
-                        },
-                        {
-                            value: 'Подводные роботы',
-                            label: 'Подводные роботы',
-                        },
-                        {
-                            value: '3Д моделирование',
-                            label: '3Д моделирование',
-                        },
-                        {
-                            value: 'Scratch',
-                            label: 'Scratch',
-                        },
-                        {
-                            value: 'Виртуальная реальность',
-                            label: 'Виртуальная реальность',
-                        },
-                        {
-                            value: 'БПЛА',
-                            label: 'БПЛА',
-                        },
-                        {
-                            value: 'Станки ЧПУ',
-                            label: 'Станки ЧПУ',
-                        },
-                        {
-                            value: 'Нейротехнологии',
-                            label: 'Нейротехнологии',
-                        },
-                        {
-                            value: 'Python',
-                            label: 'Python',
-                        },
-                        {
-                            value: 'Разработка игр',
-                            label: 'Разработка игр',
-                        },
-                        {
-                            value: 'Футбол',
-                            label: 'Футбол',
-                        },
-                        {
-                            value: 'Интернет вещей',
-                            label: 'Интернет вещей',
-                        },
-                    ]"
+                    :items="events"
                 />
             </FormElements>
 
@@ -629,3 +526,224 @@
         </template>
     </Vueform>
 </template>
+
+
+<script setup>
+import { onMounted, reactive, watch, ref } from 'vue'
+const evens_element = ref(null)
+const country_element = ref(null)
+const age_element = ref(null)
+const participation_element = ref(null)
+
+const events = ref([])
+
+// const events = ref([
+// {
+//     value: 'Творческая категория',
+//     label: 'Творческая категория',
+// },
+// {
+//     value: 'Движение по линии',
+//     label: 'Движение по линии',
+// },
+// {
+//     value: 'Сумо',
+//     label: 'Сумо',
+// },
+// {
+//     value: 'Миссия &#34;Будущий инженер&#34;',
+//     label: 'Миссия &#34;Будущий инженер&#34;',
+// },
+// {
+//     value: 'Scratch Junior',
+//     label: 'Scratch Junior',
+// },
+// {
+//     value: 'Олимпиада «Старт в робототехнику»',
+//     label: 'Олимпиада «Старт в робототехнику»',
+// },
+// {
+//     value: 'Движение по линии DIY',
+//     label: 'Движение по линии DIY',
+// },
+// {
+//     value: 'Движение по линии Конструкторы',
+//     label: 'Движение по линии Конструкторы',
+// },
+// {
+//     value: 'Механическое сумо',
+//     label: 'Механическое сумо',
+// },
+// {
+//     value: 'Интеллектуальное сумо',
+//     label: 'Интеллектуальное сумо',
+// },
+// {
+//     value: 'Эстафета',
+//     label: 'Эстафета',
+// },
+// {
+//     value: 'Большое путешествие',
+//     label: 'Большое путешествие',
+// },
+// {
+//     value: 'Миссия &#34;Вселенная бесконечна&#34;',
+//     label: 'Миссия &#34;Вселенная бесконечна&#34;',
+// },
+// {
+//     value: 'Подводные роботы',
+//     label: 'Подводные роботы',
+// },
+// {
+//     value: '3Д моделирование',
+//     label: '3Д моделирование',
+// },
+// {
+//     value: 'Scratch',
+//     label: 'Scratch',
+// },
+// {
+//     value: 'Виртуальная реальность',
+//     label: 'Виртуальная реальность',
+// },
+// {
+//     value: 'БПЛА',
+//     label: 'БПЛА',
+// },
+// {
+//     value: 'Станки ЧПУ',
+//     label: 'Станки ЧПУ',
+// },
+// {
+//     value: 'Нейротехнологии',
+//     label: 'Нейротехнологии',
+// },
+// {
+//     value: 'Python',
+//     label: 'Python',
+// },
+// {
+//     value: 'Разработка игр',
+//     label: 'Разработка игр',
+// },
+// {
+//     value: 'Футбол',
+//     label: 'Футбол',
+// },
+// {
+//     value: 'Интернет вещей',
+//     label: 'Интернет вещей',
+// },
+// ])
+
+onMounted(() => {
+    const template = ["Творческая категория", "Движение по линии", "Сумо", "Миссия &#34;Будущий инженер&#34;", "Scratch Junior"]
+    const template2 = ['Олимпиада «Старт в робототехнику»', 'Движение по линии DIY', 'Движение по линии Конструкторы', 'Механическое сумо', 'Интеллектуальное сумо', 'Эстафета', 'Большое путешествие', 'Миссия &#34;Вселенная бесконечна&#34;', 'Творческая категория', 'Подводные роботы', '3Д моделирование', 'Scratch']
+    const template3 = ['Движение по линии DIY', 'Движение по линии Конструкторы', 'Механическое сумо', 'Интеллектуальное сумо', 'Эстафета', 'Большое путешествие', 'Футбол', 'Миссия &#34;Вселенная бесконечна&#34;', 'Творческая категория', 'Подводные роботы', '3Д моделирование']
+    const template4 = ['Олимпиада «Старт в робототехнику»', 'Движение по линии DIY', 'Движение по линии Конструкторы', 'Интеллектуальное сумо', '']
+
+    watch([() => country_element.value?.data, () => age_element.value?.data, () => participation_element.value?.data], () => {
+        const country = country_element.value?.data?.country;
+        const age = age_element.value?.data?.age;
+        const participation = participation_element.value?.data?.participation;
+
+        if (country == 'Россия') {
+            if (age == 'Дошкольники (5-6 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template;
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Младшая категория (7-9 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template2;
+                } else {
+                    events.value = template3;
+                }
+            }
+            if (age == 'Средняя категория (10-13 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template4;
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Старшая категория (14-17 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+        }
+        if (country == 'Казахстан') {
+            if (age == 'Дошкольники (5-6 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template;
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Младшая категория (7-9 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Средняя категория (10-13 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Старшая категория (14-17 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+        }
+        if (country == 'Узбекистан') {
+            if (age == 'Дошкольники (5-6 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template;
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Младшая категория (7-9 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Средняя категория (10-13 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+            if (age == 'Старшая категория (14-17 лет)') {
+                if (participation == 'Индивидуальное участие') {
+                    events.value = template
+                } else {
+                    events.value = template;
+                }
+            }
+        }
+
+
+    })
+
+})
+
+
+
+
+</script>
